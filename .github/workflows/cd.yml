@@ -46,7 +46,7 @@ jobs:
       - name: Deploy
         working-directory: code
         run: |
-          eb init  --region us-east-1 --platform "Python 3.8"  --source-code no
+          eb init  --region us-east-1 --platform "Python 3.8" --interactive false
           echo "global:" > .elasticbeanstalk/config.yml
           echo "  application_name: my-app" >> .elasticbeanstalk/config.yml
           echo "  default_region: us-east-1" >> .elasticbeanstalk/config.yml
