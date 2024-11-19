@@ -28,6 +28,10 @@ jobs:
         working-directory: code
         run: npm i
 
+      - name: Install jsonwebtoken
+        working-directory: code
+        run: npm install jsonwebtoken
+
       - name: Install python
         working-directory: code
         run: |

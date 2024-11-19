@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
 
-
+  const jwt = require('jsonwebtoken');
 
   // Init the Express application
   const app = express();
@@ -27,9 +27,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
   // RETURNS
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
-    /**************************************************************************** */
-
-  //! END @TODO1
+  /**************************************************************************** */
 
   function sendFileCallBack(err) {
     if (err) {
@@ -44,15 +42,40 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
     if (!req.query.image_url) {
       return res.status(400).send("Error Image URL Parameter");
     }
-    const result=await filterImageFromURL(req.query.image_url)
-    res.sendFile(result, (err) => cleanUpFile(err, result));
+    if (!req.query.token) {
+      return res.status(400).send("Error Token Parameter");
+    }
+    
+    try {
+      const user = await verifyToken(req.query.token, 'IUSETHISKEY');
+      
+      const result = await filterImageFromURL(req.query.image_url);
+      
+      res.sendFile(result, (err) => cleanUpFile(err, result));
+      
+    } catch (err) {
+      res.status(403).send({ error: 'Unauthorized or failed to process the request.' });
+    }
+
 
   } );
 
+  app.get( "/getToken", async (req, res) => {
+    if (!req.query.key) {
+      return res.status(400).send("Error Key Parameter");
+    }
+    const user = { key: req.query.key };
+    const token = jwt.sign(user, 'IUSETHISKEY', { expiresIn: '1h' });
+    res.json({ token });
+
+  } );
+  //! END @TODO1
+  
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async (req, res) => {
-    res.send("try GET /filteredimage?image_url={{}}")
+    res.send("try GET /getToken?key={{}} to get a token")
+    res.send("try GET /filteredimage?image_url={{}}&key={{}}&token={{}} to filtered the image")
   } );
   
 
@@ -61,3 +84,4 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
       console.log( `server running http://localhost:${ port }` );
       console.log( `press CTRL+C to stop server` );
   } );
+
