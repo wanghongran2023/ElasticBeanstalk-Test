@@ -46,6 +46,6 @@ jobs:
       - name: Deploy
         working-directory: code
         run: |
-          eb init
+          eb init  --region us-east-1 --platform "Python 3.8" --application "my-app"
           eb create
           eb deploy
