@@ -46,7 +46,7 @@ jobs:
       - name: eb Init
         working-directory: code
         run: |
-          eb init  --region us-east-1 --platform "Node.js 16" --interactive false --no-verify-ssl --keyname test
+          eb init  --region us-east-1 --platform "node.js-18" --interactive false --no-verify-ssl --keyname test
           echo "global:" > .elasticbeanstalk/config.yml
           echo "  application_name: my-app" >> .elasticbeanstalk/config.yml
           echo "  default_region: us-east-1" >> .elasticbeanstalk/config.yml
