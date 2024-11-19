@@ -50,7 +50,7 @@ jobs:
           echo "global:" > .elasticbeanstalk/config.yml
           echo "  application_name: my-app" >> .elasticbeanstalk/config.yml
           echo "  default_region: us-east-1" >> .elasticbeanstalk/config.yml
-          echo "  platform: Python 3.8" >> .elasticbeanstalk/config.yml
+          echo "  platform: node.js-18" >> .elasticbeanstalk/config.yml
           echo "  workspace_type: Application" >> .elasticbeanstalk/config.yml
           eb create
           eb deploy
