@@ -46,15 +46,11 @@ jobs:
       - name: eb Init
         working-directory: code
         run: |
-          eb init  --region us-east-1 --platform "Python 3.8" --interactive false --no-verify-ssl --keyname test
+          eb init  --region us-east-1 --platform "Node.js 16" --interactive false --no-verify-ssl --keyname test
           echo "global:" > .elasticbeanstalk/config.yml
           echo "  application_name: my-app" >> .elasticbeanstalk/config.yml
           echo "  default_region: us-east-1" >> .elasticbeanstalk/config.yml
           echo "  platform: Python 3.8" >> .elasticbeanstalk/config.yml
           echo "  workspace_type: Application" >> .elasticbeanstalk/config.yml
-      
-      - name: Create and Deploy
-        working-directory: code
-        run: |
           eb create
           eb deploy
