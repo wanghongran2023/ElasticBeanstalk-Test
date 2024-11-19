@@ -28,6 +28,17 @@ import jwt from 'jsonwebtoken';
 
   /**************************************************************************** */
 
+  function verifyToken(token, secret) {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, secret, (err, decoded) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(decoded);
+      });
+    });
+  }
+
   function sendFileCallBack(err) {
     if (err) {
       console.error("Error occurred while sending file:", err);
@@ -46,16 +57,14 @@ import jwt from 'jsonwebtoken';
     }
     
     try {
-      const token = decodeURIComponent(req.query.token)
-      const user = await verifyToken(token, 'IUSETHISKEY');
+      const key = await verifyToken(req.query.token, 'IUSETHISKEY');
       
       const result = await filterImageFromURL(req.query.image_url);
       
       res.sendFile(result, (err) => cleanUpFile(err, result));
       
     } catch (err) {
-      console.log( err );
-      res.status(403).send({ error: err });
+      res.status(403).send({ error: 'Unauthorized or failed to process the request.' });
     }
 
 
@@ -65,8 +74,8 @@ import jwt from 'jsonwebtoken';
     if (!req.query.key) {
       return res.status(400).send("Error Key Parameter");
     }
-    const user = { key: req.query.key };
-    const token = jwt.sign(user, 'IUSETHISKEY', { expiresIn: '1h' });
+    const key = { key: req.query.key };
+    const token = jwt.sign(key, 'IUSETHISKEY', { expiresIn: '1h' });
     res.json({ token });
 
   } );
@@ -75,7 +84,7 @@ import jwt from 'jsonwebtoken';
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async (req, res) => {
-    res.send("try GET /getToken?key={{}} to get a token, and then GET /filteredimage?image_url={{}}&key={{}}&token={{}} to filtered the image")
+    res.send("try GET /getToken?key={{}} to get a token, and then try GET /filteredimage?image_url={{}}&key={{}}&token={{}} to filtered the image")
   } );
   
 
