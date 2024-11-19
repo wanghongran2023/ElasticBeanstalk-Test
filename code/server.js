@@ -30,7 +30,25 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
     /**************************************************************************** */
 
   //! END @TODO1
-  
+
+  function sendFileCallBack(err) {
+    if (err) {
+      console.error("Error occurred while sending file:", err);
+    }
+    deleteLocalFiles([result]);
+  }
+
+
+  app.get( "/filteredimage", async (req, res) => {
+
+    if (!req.image_url) {
+      return res.status(400).send("Error Image URL Parameter");
+    }
+    const result=await filterImageFromURL(req.image_url)
+    res.sendFile(result, (err) => cleanUpFile(err, result));
+
+  } );
+
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async (req, res) => {
