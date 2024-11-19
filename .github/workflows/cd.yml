@@ -1,0 +1,22 @@
+name: cd
+
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    name: Build Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Up Npm
+        run: |
+          sudo apt install npm
+
+      - name: Install Dependency
+        working-directory: code
+        run: npm i
