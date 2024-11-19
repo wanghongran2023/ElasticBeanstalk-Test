@@ -83,7 +83,7 @@ import jwt from 'jsonwebtoken';
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async (req, res) => {
-    res.send("try GET /getToken?key={{}} to get a token, and then try GET /filteredimage?image_url={{}}&key={{}}&token={{}} to filtered the image")
+    res.send("try GET /getToken?key={{}} to get a token, and then try GET /filteredimage?image_url={{}}&token={{}} to filtered the image")
   } );
   
 
