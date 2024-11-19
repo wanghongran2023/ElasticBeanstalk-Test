@@ -60,9 +60,8 @@ import jwt from 'jsonwebtoken';
       const key = await verifyToken(req.query.token, 'IUSETHISKEY');
       
       const result = await filterImageFromURL(req.query.image_url);
-      
       res.sendFile(result, (err) => cleanUpFile(err, result));
-      
+    
     } catch (err) {
       res.status(403).send({ error: 'Unauthorized or failed to process the request.' });
     }
