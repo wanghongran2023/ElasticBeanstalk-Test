@@ -39,12 +39,13 @@ import jwt from 'jsonwebtoken';
     });
   }
 
-  function sendFileCallBack(err) {
+  function sendFileCallBack(err,result) {
     if (err) {
       console.error("Error occurred while sending file:", err);
     }
     deleteLocalFiles([result]);
-    console.error("Successfully delete file");
+    console.log(result);
+    console.log("Successfully delete file");
   }
 
 
