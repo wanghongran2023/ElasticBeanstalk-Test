@@ -41,10 +41,10 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
 
   app.get( "/filteredimage", async (req, res) => {
 
-    if (!req.image_url) {
+    if (!req.query.image_url) {
       return res.status(400).send("Error Image URL Parameter");
     }
-    const result=await filterImageFromURL(req.image_url)
+    const result=await filterImageFromURL(req.query.image_url)
     res.sendFile(result, (err) => cleanUpFile(err, result));
 
   } );
