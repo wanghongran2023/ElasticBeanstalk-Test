@@ -1,8 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
-
-  const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
   // Init the Express application
   const app = express();

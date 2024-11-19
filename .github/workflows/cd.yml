@@ -57,4 +57,4 @@ jobs:
           echo "  platform: node.js-18" >> .elasticbeanstalk/config.yml
           echo "  workspace_type: Application" >> .elasticbeanstalk/config.yml
           #eb create my-env --platform "node.js-18"
-          eb deploy
+          eb deploy my-env
