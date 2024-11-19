@@ -40,9 +40,7 @@ jobs:
         working-directory: code
         run: |
           pip3 install awsebcli --upgrade --user
-          nano ~/.bashrc
           export PATH=$PATH:~/.local/bin
-          source ~/.bashrc
           eb --version
 
       - name: Deploy
